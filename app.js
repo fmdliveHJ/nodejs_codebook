@@ -31,7 +31,8 @@ app.get('/api/members', async (req, res) => {
   // const team = req.query.team;
   const { team } = req.query;
   if (team) {
-    const teamMembers = members.filter((m) => m.team === team);
+    // const teamMembers = members.filter((m) => m.team === team);
+    const teamMembers = await Member.findAll({ where: { team: team } });
     res.send(teamMembers);
   } else {
     const members = await Member.findAll(); //members 테이블의 모든 요소를 조회해서 가져오는 기능
@@ -40,10 +41,11 @@ app.get('/api/members', async (req, res) => {
 });
 
 // :id에는 다양한 값 들어올수 있는대, 그값들을 id에 담음
-app.get('/api/members/:id', (req, res) => {
+app.get('/api/members/:id', async (req, res) => {
   // const id = req.params.id;
   const { id } = req.params;
-  const member = members.find((m) => m.id === Number(id));
+  // const member = members.find((m) => m.id === Number(id));
+  const member = await Member.findOne({ where: { id: id } });
   if (member) {
     res.send(member);
   } else {
