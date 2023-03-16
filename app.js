@@ -15,13 +15,16 @@ app.use(express.json()); //미들웨어
 //> 바디에 있는 json데이터가 req객체의 body프로퍼티에 설정됨
 // > 리퀘스트의 패스와 메소드를 보고 알맞은 라우터 핸들러가 호출됨
 
+/*
+  모델들이 가지고 있는 대부분의 메소드는 프로미스 객체를 리턴하는 비동기 실행 함수
+*/
 app.use(
   express.urlencoded({
     extended: true,
   })
 );
 
-app.get('/api/members', (req, res) => {
+app.get('/api/members', async (req, res) => {
   //배열을 넣으면 send메소드가 배열을 json문자열로 변환한 결과를 리스폰스 바디에 담아서 보내주게 됨
 
   //팀단위
@@ -31,6 +34,7 @@ app.get('/api/members', (req, res) => {
     const teamMembers = members.filter((m) => m.team === team);
     res.send(teamMembers);
   } else {
+    const members = await Member.findAll(); //members 테이블의 모든 요소를 조회해서 가져오는 기능
     res.send(members);
   }
 });
