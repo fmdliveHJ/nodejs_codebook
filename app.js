@@ -2,7 +2,11 @@ const express = require('express');
 
 const app = express();
 
-let members = require('./members');
+const db = require('./models');
+
+const { Member } = db;
+
+// let members = require('./members');
 
 //express.json() 어떤 함수를 리턴함
 // 리턴된 함수는 서버로 온 리퀘스트의 바디에 json 데이터가 존재할 경우
