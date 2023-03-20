@@ -1,5 +1,5 @@
 const express = require('express');
-
+const cors = require('cors');
 const app = express();
 
 const db = require('./models');
@@ -13,7 +13,7 @@ app.use(
     extended: true,
   })
 );
-
+app.use(cors());
 app.get('/api/members', async (req, res) => {
   const { team } = req.query;
   if (team) {
@@ -35,38 +35,44 @@ app.get('/api/members/:id', async (req, res) => {
   }
 });
 
-app.post('/api/members', (req, res) => {
-  console.log(req.body);
-  const result = req.body;
-  res.send(result);
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
 });
 
-app.put('/api/members/:id', (req, res) => {
-  const { id } = req.params;
-  const newInfo = req.body;
-  const member = members.find((m) => m.id === Number(id));
-
-  if (member) {
-    Object.keys(newInfo).forEach((prop) => {
-      member[prop] = newInfo[prop];
-    });
-    res.send(member);
-  } else {
-    res.status(404).send({ message: 'no member id' });
-  }
-});
-
-app.delete('/api/members/:id', (req, res) => {
-  const { id } = req.params;
-  const memberCount = members.length;
-  members = members.filter((member) => member.id !== Number(id));
-  if (members.length < memberCount) {
-    res.send({ message: 'Delete' });
-  } else {
-    res.status(404).send({ message: 'no member id' });
-  }
+app.get('/api/members', (req, res) => {
+  res.send('API response');
 });
 
 app.listen(3001, () => {
   console.log('server is listening..');
 });
+
+// var express = require('express');
+// var app = express();
+
+// app.use(express.static(__dirname + '../client/build'));
+
+// app.get('/', (req, res) => {
+//   res.sendFile('../client/build/index.html');
+// });
+
+// app.listen(3001, '0.0.0.0', () => {
+//   console.log('Server is running : port 3001');
+// });
+
+// const express = require('express');
+// const path = require('path');
+// const app = express();
+
+// app.use(express.static(path.join(__dirname, '../client/build')));
+
+// app.get('/', function (req, res) {
+//   res.sendFile(path.join(__dirname, '../client/build/index.html'));
+// });
+
+// app.listen(8080, function () {
+//   console.log('listening on 8080');
+// });

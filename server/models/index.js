@@ -8,7 +8,7 @@ const sequelize = new Sequelize(database, username, password, {
   dialect,
 });
 //Member 모델은 Members 테이블과 연동
-const Member = require('./member')(sequelize, Sequelize.DataTypes);
+const Member = require('./codebooks')(sequelize, Sequelize.DataTypes);
 
 const db = {};
 db.Member = Member;
