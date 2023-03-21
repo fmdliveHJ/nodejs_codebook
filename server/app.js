@@ -2,39 +2,31 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 
-const db = require('./models');
+const mysql = require('mysql');
 
-const { Member } = db;
+let connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '98421234aQ!',
+  database: 'codebook',
+});
 
-app.use(express.json());
+connection.connect(function (err) {
+  if (err) throw err;
+  console.log('Connected');
+});
 
-app.use(
-  express.urlencoded({
-    extended: true,
-  })
-);
+app.set('port', process.env.PORT || 3000);
+
+app.get('/', async (req, res) => {
+  const ko = 'SELECT * FROM codebook.codebook';
+  connection.query(ko, function (err, result, fields) {
+    if (err) throw err;
+    res.send(result);
+  });
+});
+
 app.use(cors());
-app.get('/api/members', async (req, res) => {
-  const { team } = req.query;
-  if (team) {
-    const teamMembers = await Member.findAll({ where: { team: team } });
-    res.send(teamMembers);
-  } else {
-    const members = await Member.findAll();
-    res.send(members);
-  }
-});
-
-app.get('/api/members/:id', async (req, res) => {
-  const { id } = req.params;
-  const member = await Member.findOne({ where: { id: id } });
-  if (member) {
-    res.send(member);
-  } else {
-    res.status(404).send('no member');
-  }
-});
-
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
@@ -42,6 +34,8 @@ app.use((req, res, next) => {
   next();
 });
 
-app.listen(3001, () => {
-  console.log('server is listening..');
+app.listen(app.get('port'), () => {
+  console.log('Express server listening on port ' + app.get('port'));
 });
+
+module.exports = connection;

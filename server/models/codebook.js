@@ -1,8 +1,8 @@
 'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class codebooks extends Model {}
-  codebooks.init(
+  class Codebook extends Model {}
+  Codebook.init(
     {
       id: {
         allowNull: false,
@@ -15,8 +15,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'codebooks',
+      modelName: 'Codebook',
     }
   );
-  return codebooks;
+  return Codebook;
 };

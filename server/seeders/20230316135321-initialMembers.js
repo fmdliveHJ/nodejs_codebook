@@ -6,8 +6,8 @@ module.exports = {
     await queryInterface.bulkInsert('Members', [
       {
         id: 1,
-        name: 'Alex',
-        team: 'engineering',
+        name: '최근에',
+        team: '한국',
         position: 'Server Developer',
         emailAddress: 'alex@google.com',
         phoneNumber: '010-xxxx-xxxx',

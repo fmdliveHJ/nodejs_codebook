@@ -5,7 +5,7 @@ function App() {
 
   useEffect(() => {
     axios
-      .get('http://localhost:3001/api/members')
+      .get('http://localhost:3000')
       .then((res) => {
         setData(res.data);
       })
@@ -34,7 +34,7 @@ function App() {
         <tbody>
           {data.map((el, idx) => (
             <tr key={idx} style={{ listStyle: 'none' }}>
-              <td>{el.id}</td>
+              <td>{el.name}</td>
               <td>
                 <input
                   type='text'
