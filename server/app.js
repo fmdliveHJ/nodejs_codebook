@@ -42,37 +42,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/api/members', (req, res) => {
-  res.send('API response');
-});
-
 app.listen(3001, () => {
   console.log('server is listening..');
 });
-
-// var express = require('express');
-// var app = express();
-
-// app.use(express.static(__dirname + '../client/build'));
-
-// app.get('/', (req, res) => {
-//   res.sendFile('../client/build/index.html');
-// });
-
-// app.listen(3001, '0.0.0.0', () => {
-//   console.log('Server is running : port 3001');
-// });
-
-// const express = require('express');
-// const path = require('path');
-// const app = express();
-
-// app.use(express.static(path.join(__dirname, '../client/build')));
-
-// app.get('/', function (req, res) {
-//   res.sendFile(path.join(__dirname, '../client/build/index.html'));
-// });
-
-// app.listen(8080, function () {
-//   console.log('listening on 8080');
-// });
