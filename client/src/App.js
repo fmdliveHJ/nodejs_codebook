@@ -5,7 +5,7 @@ function App() {
 
   useEffect(() => {
     axios
-      .get('http://localhost:3000')
+      .get('http://localhost:3001')
       .then((res) => {
         setData(res.data);
       })
@@ -21,6 +21,10 @@ function App() {
       })
     );
   };
+  /**
+   * react 수정 및 삭제 버튼을 사용해서 mysql의 데이터를 수정 및 삭제
+   *
+   */
   return (
     <div className='App'>
       <table border='1'>
@@ -29,6 +33,8 @@ function App() {
             <th>목록</th>
             <th>한글</th>
             <th>영어</th>
+            <th>수정</th>
+            <th>삭제</th>
           </tr>
         </thead>
         <tbody>
@@ -49,6 +55,8 @@ function App() {
                   onChange={(e) => handleChange(e.target.value, idx, 'en')}
                 />
               </td>
+              <td>수정</td>
+              <td>삭제</td>
             </tr>
           ))}
         </tbody>
