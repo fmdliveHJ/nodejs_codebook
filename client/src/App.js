@@ -5,6 +5,7 @@ function App() {
   const [data, setData] = useState([]);
   const [edit, setEdit] = useState(0);
   const [listState, setListState] = useState(false);
+  const [editpop, setEditpop] = useState(false);
 
   useEffect(() => {
     dataList();
@@ -31,6 +32,7 @@ function App() {
 
   const onEditClick = (index) => {
     editClick(index);
+    setEditpop(true);
   };
 
   const editClick = (index) => {
@@ -41,8 +43,7 @@ function App() {
     }
   };
 
-  const onDeleteClick = (e, item) => {
-    e.preventDefault();
+  const onDeleteClick = (item) => {
     const url = `http://localhost:3001/${item.name} `;
     console.log(url);
     axios.delete(url).then((res) => {
@@ -89,7 +90,7 @@ function App() {
                   <tr key={idx} style={{ listStyle: 'none' }}>
                     <td>{item.name}</td>
                     <td>
-                      {edit === idx ? (
+                      {edit === idx && editpop ? (
                         <input
                           type='text'
                           value={item.ko}
@@ -102,7 +103,7 @@ function App() {
                       )}
                     </td>
                     <td>
-                      {edit === idx ? (
+                      {edit === idx && editpop ? (
                         <input
                           type='text'
                           value={item.en}
@@ -115,14 +116,18 @@ function App() {
                       )}
                     </td>
                     <td>
-                      <button
-                        className='modify'
-                        onClick={() => onEditClick(idx)}
-                      >
-                        수정
-                      </button>
-                      {edit === idx ? (
+                      {/* 
+                        수정 버튼을 누르면 
+                      */}
+
+                      {edit === idx && editpop ? (
                         <span>
+                          <button
+                            className='modify'
+                            onClick={() => setEditpop(false)}
+                          >
+                            수정
+                          </button>
                           <button
                             className='save'
                             onClick={() => onSaveClick(item)}
@@ -131,13 +136,18 @@ function App() {
                           </button>
                           <button
                             className='delete'
-                            onClick={(e) => onDeleteClick(e, item)}
+                            onClick={() => onDeleteClick(item)}
                           >
                             삭제
                           </button>
                         </span>
                       ) : (
-                        ''
+                        <button
+                          className='modify'
+                          onClick={() => onEditClick(idx)}
+                        >
+                          수정
+                        </button>
                       )}
                     </td>
                   </tr>
