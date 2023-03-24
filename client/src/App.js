@@ -4,10 +4,11 @@ import './app.css';
 function App() {
   const [data, setData] = useState([]);
   const [edit, setEdit] = useState(0);
+  const [listState, setListState] = useState(false);
 
   useEffect(() => {
     dataList();
-  }, []);
+  }, [listState]);
 
   const dataList = () => {
     axios
@@ -52,6 +53,7 @@ function App() {
         );
       }
     });
+    setListState(true);
   };
 
   const onSaveClick = (e) => {
@@ -62,9 +64,10 @@ function App() {
         console.log(res);
       }
     });
+    setListState(true);
   };
 
-  const onSubminClick = (e, index) => {
+  const onSubminClick = (e) => {
     e.preventDefault();
   };
 
@@ -78,43 +81,47 @@ function App() {
               <th>한글</th>
               <th>영어</th>
               <th>수정</th>
-              <th>삭제</th>
             </tr>
           </thead>
           <tbody>
-            {data.map((el, idx) => (
+            {data.map((item, idx) => (
               <tr key={idx} style={{ listStyle: 'none' }}>
-                <td>{el.id}</td>
+                <td>{item.name}</td>
                 <td>
                   {edit === idx ? (
                     <input
                       type='text'
-                      value={el.ko}
+                      value={item.ko}
                       onChange={(e) => handleChange(e.target.value, idx, 'ko')}
                     />
                   ) : (
-                    <span>{el.ko}</span>
+                    <span>{item.ko}</span>
                   )}
                 </td>
                 <td>
                   {edit === idx ? (
                     <input
                       type='text'
-                      value={el.en}
+                      value={item.en}
                       onChange={(e) => handleChange(e.target.value, idx, 'en')}
                     />
                   ) : (
-                    <span>{el.en}</span>
+                    <span>{item.en}</span>
                   )}
                 </td>
                 <td>
                   <button onClick={() => onEditClick(idx)}>수정</button>
-                </td>
-                <td>
-                  <button onClick={() => onDeleteClick(el.id)}>삭제</button>
-                </td>
-                <td style={{ marginTop: '20px' }}>
-                  <button onClick={() => onSaveClick(el)}>저장</button>
+
+                  {edit === idx ? (
+                    <span>
+                      <button onClick={() => onSaveClick(item)}>저장</button>
+                      <button onClick={() => onDeleteClick(item.id)}>
+                        삭제
+                      </button>
+                    </span>
+                  ) : (
+                    ''
+                  )}
                 </td>
               </tr>
             ))}

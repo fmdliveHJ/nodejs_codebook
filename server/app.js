@@ -69,6 +69,7 @@ app.put('/:id', function (req, res) {
 
 app.delete('/:id', function (req, res) {
   let id = req.params.id;
+  let name = req.body.name;
   let sql = 'DELETE FROM codebook.codebook WHERE id=?';
   connection.query(sql, [id], function (err, result, field) {
     if (err) {
