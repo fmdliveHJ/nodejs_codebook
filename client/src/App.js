@@ -41,14 +41,16 @@ function App() {
     }
   };
 
-  const onDeleteClick = (id) => {
-    const url = `http://localhost:3001/${id} `;
+  const onDeleteClick = (e) => {
+    const url = `http://localhost:3001/${e.name} `;
     console.log(url);
     axios.delete(url).then((res) => {
       if (res) {
         setData(
           data.map((item, idx) => {
-            return idx === id ? item.filter((data) => data.index !== id) : item;
+            return item.name === e.name
+              ? item.filter((data) => data.name !== e.name)
+              : item;
           })
         );
       }
@@ -74,59 +76,81 @@ function App() {
   return (
     <div className='App'>
       <form onSubmit={onSubminClick}>
-        <table border='1'>
-          <thead>
-            <tr>
-              <th>목록</th>
-              <th>한글</th>
-              <th>영어</th>
-              <th>수정</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((item, idx) => (
-              <tr key={idx} style={{ listStyle: 'none' }}>
-                <td>{item.name}</td>
-                <td>
-                  {edit === idx ? (
-                    <input
-                      type='text'
-                      value={item.ko}
-                      onChange={(e) => handleChange(e.target.value, idx, 'ko')}
-                    />
-                  ) : (
-                    <span>{item.ko}</span>
-                  )}
-                </td>
-                <td>
-                  {edit === idx ? (
-                    <input
-                      type='text'
-                      value={item.en}
-                      onChange={(e) => handleChange(e.target.value, idx, 'en')}
-                    />
-                  ) : (
-                    <span>{item.en}</span>
-                  )}
-                </td>
-                <td>
-                  <button onClick={() => onEditClick(idx)}>수정</button>
-
-                  {edit === idx ? (
-                    <span>
-                      <button onClick={() => onSaveClick(item)}>저장</button>
-                      <button onClick={() => onDeleteClick(item.id)}>
-                        삭제
+        <div className='table'>
+          <h2>코드북</h2>
+          <div className='table-warpper'>
+            <table>
+              <thead>
+                <tr>
+                  <th>목록</th>
+                  <th>한글</th>
+                  <th>영어</th>
+                  <th>수정</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.map((item, idx) => (
+                  <tr key={idx} style={{ listStyle: 'none' }}>
+                    <td>{item.name}</td>
+                    <td>
+                      {edit === idx ? (
+                        <input
+                          type='text'
+                          value={item.ko}
+                          onChange={(e) =>
+                            handleChange(e.target.value, idx, 'ko')
+                          }
+                        />
+                      ) : (
+                        <span>{item.ko}</span>
+                      )}
+                    </td>
+                    <td>
+                      {edit === idx ? (
+                        <input
+                          type='text'
+                          value={item.en}
+                          onChange={(e) =>
+                            handleChange(e.target.value, idx, 'en')
+                          }
+                        />
+                      ) : (
+                        <span>{item.en}</span>
+                      )}
+                    </td>
+                    <td>
+                      <button
+                        className='modify'
+                        onClick={() => onEditClick(idx)}
+                      >
+                        수정
                       </button>
-                    </span>
-                  ) : (
-                    ''
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+
+                      {edit === idx ? (
+                        <span>
+                          <button
+                            className='save'
+                            onClick={() => onSaveClick(item)}
+                          >
+                            저장
+                          </button>
+                          <button
+                            className='delete'
+                            onClick={() => onDeleteClick(item)}
+                          >
+                            삭제
+                          </button>
+                        </span>
+                      ) : (
+                        ''
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </form>
     </div>
   );

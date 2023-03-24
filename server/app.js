@@ -67,11 +67,10 @@ app.put('/:id', function (req, res) {
   });
 });
 
-app.delete('/:id', function (req, res) {
-  let id = req.params.id;
-  let name = req.body.name;
-  let sql = 'DELETE FROM codebook.codebook WHERE id=?';
-  connection.query(sql, [id], function (err, result, field) {
+app.delete('/:name', function (req, res) {
+  let name = req.params.name;
+  let sql = 'DELETE FROM codebook.codebook WHERE name=?';
+  connection.query(sql, [name], function (err, result, field) {
     if (err) {
       console.log(err);
       res.status(500).send('Internal Server Error');
