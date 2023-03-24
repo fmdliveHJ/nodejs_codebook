@@ -5,12 +5,6 @@ function App() {
   const [data, setData] = useState([]);
   const [edit, setEdit] = useState(0);
 
-  /**
-   * 1. data를 삭제하고 리스트를 바로 적용하려면 useEffect에 data를 넣어주어야함
-   * 1-1. data에 입력을해서 수정을 하는 순간 data의 리스트가 입력되서 바로 데이터베이스의 리스트를 불러옴 그래서 수정이 안됨
-   * 2. 저장버튼을 눌러서 mysql 에 있는 내용에 수정된 내용을 보내야함
-   */
-
   useEffect(() => {
     dataList();
   }, []);
@@ -60,25 +54,17 @@ function App() {
     });
   };
 
-  //저장 put 기능
-  const onPutHandler = (id) => {
-    const url = `http://localhost:3001/${id} `;
-    axios
-      .put(url, {
-        id: 'id',
-        name: 'name',
-        ko: 'ko',
-        en: 'en',
-      })
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+  const onSaveClick = (e) => {
+    const url = `http://localhost:3001/${e.id} `;
+    console.log(e);
+    axios.put(url, e).then((res) => {
+      if (res) {
+        console.log(res);
+      }
+    });
   };
 
-  const onSubminClick = (e) => {
+  const onSubminClick = (e, index) => {
     e.preventDefault();
   };
 
@@ -127,13 +113,13 @@ function App() {
                 <td>
                   <button onClick={() => onDeleteClick(el.id)}>삭제</button>
                 </td>
+                <td style={{ marginTop: '20px' }}>
+                  <button onClick={() => onSaveClick(el)}>저장</button>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
-        <div style={{ marginTop: '20px' }}>
-          <button type='submit'>저장</button>
-        </div>
       </form>
     </div>
   );
