@@ -41,21 +41,17 @@ function App() {
     }
   };
 
-  const onDeleteClick = (e) => {
-    const url = `http://localhost:3001/${e.name} `;
+  const onDeleteClick = (e, item) => {
+    e.preventDefault();
+    const url = `http://localhost:3001/${item.name} `;
     console.log(url);
     axios.delete(url).then((res) => {
       if (res) {
-        setData(
-          data.map((item, idx) => {
-            return item.name === e.name
-              ? item.filter((data) => data.name !== e.name)
-              : item;
-          })
-        );
+        const result = data.filter((data) => data.name !== item.name);
+        setData(result);
       }
+      setListState(true);
     });
-    setListState(true);
   };
 
   const onSaveClick = (e) => {
@@ -82,10 +78,10 @@ function App() {
             <table>
               <thead>
                 <tr>
-                  <th>목록</th>
-                  <th>한글</th>
-                  <th>영어</th>
-                  <th>수정</th>
+                  <th style={{ width: '16%' }}>목록</th>
+                  <th style={{ width: '38%' }}>한글</th>
+                  <th style={{ width: '38%' }}>영어</th>
+                  <th style={{ width: '10%', minWidth: '165px' }}>수정</th>
                 </tr>
               </thead>
               <tbody>
@@ -125,7 +121,6 @@ function App() {
                       >
                         수정
                       </button>
-
                       {edit === idx ? (
                         <span>
                           <button
@@ -136,7 +131,7 @@ function App() {
                           </button>
                           <button
                             className='delete'
-                            onClick={() => onDeleteClick(item)}
+                            onClick={(e) => onDeleteClick(e, item)}
                           >
                             삭제
                           </button>

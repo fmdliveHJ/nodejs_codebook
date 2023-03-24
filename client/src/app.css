@@ -36,7 +36,6 @@ button {
   height: calc(100% - 32px);
   overflow-y: auto;
   border-top-left-radius: 15px;
-
   border: 1px solid #ddd;
   border-right: 0;
   border-top: 0;
@@ -55,7 +54,7 @@ button {
   border-radius: 5px;
 }
 .table-warpper thead th {
-  text-align: left;
+  /* text-align: left; */
   height: 50px;
   border: 1px solid #ddd;
   padding: 0 10px;
