@@ -121,12 +121,14 @@ function App() {
                       */}
 
                       {edit === idx && editpop ? (
-                        <span>
+                        <div
+                          style={{ display: 'flex', justifyContent: 'center' }}
+                        >
                           <button
                             className='modify'
                             onClick={() => setEditpop(false)}
                           >
-                            수정
+                            닫기
                           </button>
                           <button
                             className='save'
@@ -140,14 +142,18 @@ function App() {
                           >
                             삭제
                           </button>
-                        </span>
+                        </div>
                       ) : (
-                        <button
-                          className='modify'
-                          onClick={() => onEditClick(idx)}
+                        <div
+                          style={{ display: 'flex', justifyContent: 'center' }}
                         >
-                          수정
-                        </button>
+                          <button
+                            className='modify '
+                            onClick={() => onEditClick(idx)}
+                          >
+                            수정
+                          </button>
+                        </div>
                       )}
                     </td>
                   </tr>
