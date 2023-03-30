@@ -12,9 +12,9 @@ app.use((req, res, next) => {
   next();
 });
 
-const mysql = require('mysql');
-
-let connection = mysql.createConnection({
+const maria = require('mysql');
+const HOST = '0.0.0.0';
+let connection = maria.createConnection({
   host: 'localhost',
   user: 'root',
   password: '98421234aQ!',
@@ -80,7 +80,7 @@ app.delete('/:name', function (req, res) {
   });
 });
 
-app.listen(app.get('port'), () => {
+app.listen(app.get('port'), HOST, () => {
   console.log('Express server listening on port ' + app.get('port'));
 });
 

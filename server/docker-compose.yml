@@ -1,0 +1,22 @@
+version: '3'
+services:
+  db:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 98421234aQ!
+      MYSQL_DATABASE: codebook
+    ports:
+      - '3306:3306'
+  app:
+    build: .
+    restart: always
+    ports:
+      - '3001:3001'
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_USER: root
+      DB_PASSWORD: 98421234aQ!
+      DB_NAME: codebook
