@@ -4,4 +4,5 @@
 
 - react
 - node & express
-- mysql
+- mysql & mairaDB
+- docker
